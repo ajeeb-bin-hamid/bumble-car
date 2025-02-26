@@ -73,6 +73,7 @@ dependencies {
     //Dagger Hilt for dependency injection
     ksp(libs.hilt.android.compiler)
     implementation(libs.hilt.android)
+    implementation(libs.androidx.hilt.navigation.compose)
 
     //Serialization
     implementation(libs.kotlinx.serialization.json)
