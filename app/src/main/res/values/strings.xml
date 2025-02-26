@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">Bumble Car</string>
+    <string name="bumble">Bumble</string>
+    <string name="car">Car</string>
+    <string name="pickup_location">Pickup location</string>
+    <string name="enter_your_pick_up_location">Enter your pick up location</string>
+    <string name="drop_off_point">Drop off point</string>
+    <string name="enter_your_drop_off_location">Enter your drop off location</string>
 </resources>

@@ -6,7 +6,8 @@ import kotlin.reflect.KType
 
 @Serializable
 data class HomeState(
-    val isLoading: Boolean = false
+    val pickUpPoint: String = "",
+    val dropOffPoint: String = "",
 ) {
     companion object {
         val typeMap: Map<KType, NavType<out Any>> = mapOf()
