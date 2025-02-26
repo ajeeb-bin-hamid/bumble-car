@@ -8,6 +8,8 @@ import kotlin.reflect.KType
 data class HomeState(
     val pickUpPoint: String = "",
     val dropOffPoint: String = "",
+    val pickUpSuggestions: ArrayList<String> = arrayListOf(),
+    val dropOffSuggestions: ArrayList<String> = arrayListOf(),
 ) {
     companion object {
         val typeMap: Map<KType, NavType<out Any>> = mapOf()

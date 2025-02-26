@@ -77,4 +77,7 @@ dependencies {
 
     //Serialization
     implementation(libs.kotlinx.serialization.json)
+
+    //Maps SDK
+    implementation(libs.places)
 }

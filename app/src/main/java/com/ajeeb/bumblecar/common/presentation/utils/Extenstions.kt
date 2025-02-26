@@ -15,3 +15,11 @@ suspend inline fun <STATE : Any, SIDE_EFFECT : Any> ContainerHost<STATE, SIDE_EF
 ) = subIntent {
     reduce { state.update() }
 }
+
+/**Extension function to simplify posting side effects in an Orbit MVI `ContainerHost`.
+ *  It reduces boilerplate by directly triggering the side effect.*/
+inline fun <STATE : Any, SIDE_EFFECT : Any> ContainerHost<STATE, SIDE_EFFECT>.postSideEffect(
+    crossinline sideEffect: () -> SIDE_EFFECT
+) = intent {
+    this.postSideEffect(sideEffect())
+}

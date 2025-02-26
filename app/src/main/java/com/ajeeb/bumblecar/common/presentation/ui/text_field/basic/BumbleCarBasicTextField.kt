@@ -39,9 +39,9 @@ fun BumbleCarBasicTextField(
     label: String,
     placeholder: String,
     filteredSuggestions: List<String>,
-    onValueChange: (String) -> Unit
+    setOnValueChange: (String) -> Unit,
+    searchOnValueChange: (String) -> Unit
 ) {
-
     var isFocused by remember { mutableStateOf(false) }
     var isExpanded by remember { mutableStateOf(false) }
     val labelSize by animateFloatAsState(
@@ -101,8 +101,8 @@ fun BumbleCarBasicTextField(
                 unfocusedLabelColor = MaterialTheme.colorScheme.secondary,
                 focusedLabelColor = MaterialTheme.colorScheme.primary
             ),
-            onValueChange = { text ->
-                onValueChange(text)
+            onValueChange = {
+                searchOnValueChange(it)
             })
 
         ExposedDropdownMenu(modifier = Modifier.background(MaterialTheme.colorScheme.background),
@@ -116,7 +116,8 @@ fun BumbleCarBasicTextField(
                         suggestion, style = MaterialTheme.typography.bodyMedium
                     )
                 }, onClick = {
-                    onValueChange(suggestion)
+                    setOnValueChange(suggestion)
+                    isExpanded = false
                 })
             }
         }

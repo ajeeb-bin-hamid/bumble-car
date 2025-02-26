@@ -32,7 +32,7 @@ import com.ajeeb.bumblecar.common.core.poppinsFontFamily
 import com.ajeeb.bumblecar.common.presentation.ui.text_field.basic.BumbleCarBasicTextField
 import kotlinx.coroutines.flow.Flow
 
-@OptIn(ExperimentalMaterial3Api::class)
+
 @Composable
 fun HomeScreen(
     state: State<HomeState>,
@@ -47,8 +47,7 @@ fun HomeScreen(
         sideEffect.collect { action ->
             when (action) {
                 is HomeSideEffect.ShowToast -> {
-                    Toast.makeText(context, context.getString(action.message), Toast.LENGTH_SHORT)
-                        .show()
+                    Toast.makeText(context, action.message, Toast.LENGTH_SHORT).show()
                 }
             }
         }
@@ -65,22 +64,7 @@ fun HomeScreen(
             Spacer(Modifier.height(8.dp))
             LazyColumn {
                 item {
-
-                    val suggestions =
-                        listOf("Apple", "Banana", "Cherry", "Date", "Grape", "Orange", "Mango")
-                    val pickUpSuggestions = suggestions.filter {
-                        it.contains(
-                            state.value.pickUpPoint, ignoreCase = true
-                        ) && state.value.pickUpPoint.isNotEmpty() && state.value.pickUpPoint != it
-                    }
-
-                    val dropOffSuggestions = suggestions.filter {
-                        it.contains(
-                            state.value.dropOffPoint, ignoreCase = true
-                        ) && state.value.dropOffPoint.isNotEmpty() && state.value.dropOffPoint != it
-                    }
                     Column {
-
 
                         BumbleCarBasicTextField(modifier = Modifier
                             .fillMaxWidth()
@@ -88,23 +72,31 @@ fun HomeScreen(
                             value = state.value.pickUpPoint,
                             label = stringResource(R.string.pickup_location),
                             placeholder = stringResource(R.string.enter_your_pick_up_location),
-                            filteredSuggestions = pickUpSuggestions,
-                            onValueChange = { newText ->
+                            filteredSuggestions = state.value.pickUpSuggestions,
+                            setOnValueChange = { newText ->
                                 onEvent(HomeIntent.SetPickUpPoint(newText))
+                            },
+                            searchOnValueChange = {
+                                onEvent(HomeIntent.SearchPickUpPoint(it))
                             })
 
                         Spacer(Modifier.height(12.dp))
 
-                        BumbleCarBasicTextField(modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(horizontal = 16.dp),
+                        BumbleCarBasicTextField(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(horizontal = 16.dp),
                             value = state.value.dropOffPoint,
                             label = stringResource(R.string.drop_off_point),
                             placeholder = stringResource(R.string.enter_your_drop_off_location),
-                            filteredSuggestions = dropOffSuggestions,
-                            onValueChange = { newText ->
+                            filteredSuggestions = state.value.dropOffSuggestions,
+                            setOnValueChange = { newText ->
                                 onEvent(HomeIntent.SetDropOffPoint(newText))
-                            })
+                            },
+                            searchOnValueChange = {
+                                onEvent(HomeIntent.SearchDropOffPoint(it))
+                            },
+                        )
                     }
 
                 }
