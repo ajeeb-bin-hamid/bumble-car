@@ -45,6 +45,6 @@ fun BumbleCarTheme(
     }
 
     MaterialTheme(
-        colorScheme = colorScheme, typography = Typography, content = content
+        colorScheme = colorScheme, typography = bumbleCarTypography(), content = content
     )
 }
