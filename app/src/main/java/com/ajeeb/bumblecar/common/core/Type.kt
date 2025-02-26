@@ -1,4 +1,4 @@
-package com.ajeeb.bumblecar.ui.theme
+package com.ajeeb.bumblecar.common.core
 
 import androidx.compose.material3.Typography
 import androidx.compose.ui.text.TextStyle
