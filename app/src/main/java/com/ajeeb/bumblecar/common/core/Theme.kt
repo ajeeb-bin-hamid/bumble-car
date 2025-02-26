@@ -12,7 +12,8 @@ private val DarkColorScheme = darkColorScheme(
     background = Ink,
     onBackground = White,
     surface = Slate,
-    secondary = Silver
+    secondary = Silver,
+    onError = Flame
 )
 
 private val LightColorScheme = lightColorScheme(
@@ -21,7 +22,8 @@ private val LightColorScheme = lightColorScheme(
     background = White,
     onBackground = Coal,
     surface = Dove,
-    secondary = Silver
+    secondary = Silver,
+    onError = Flame
 )
 
 @Composable

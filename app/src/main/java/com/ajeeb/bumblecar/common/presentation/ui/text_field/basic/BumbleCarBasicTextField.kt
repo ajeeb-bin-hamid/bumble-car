@@ -38,6 +38,7 @@ fun BumbleCarBasicTextField(
     value: String,
     label: String,
     placeholder: String,
+    isError: Boolean,
     filteredSuggestions: List<String>,
     setOnValueChange: (String) -> Unit,
     searchOnValueChange: (String) -> Unit
@@ -65,6 +66,7 @@ fun BumbleCarBasicTextField(
             },
             value = value,
             maxLines = 1,
+            isError = isError,
             singleLine = true,
             shape = RoundedCornerShape(16.dp),
             keyboardOptions = KeyboardOptions.Default.copy(
@@ -99,7 +101,10 @@ fun BumbleCarBasicTextField(
                 focusedIndicatorColor = MaterialTheme.colorScheme.primary,
                 unfocusedIndicatorColor = MaterialTheme.colorScheme.surface,
                 unfocusedLabelColor = MaterialTheme.colorScheme.secondary,
-                focusedLabelColor = MaterialTheme.colorScheme.primary
+                focusedLabelColor = MaterialTheme.colorScheme.primary,
+                errorLabelColor = MaterialTheme.colorScheme.secondary,
+                errorContainerColor = MaterialTheme.colorScheme.background,
+                errorIndicatorColor = MaterialTheme.colorScheme.onError
             ),
             onValueChange = {
                 searchOnValueChange(it)

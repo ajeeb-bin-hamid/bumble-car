@@ -2,6 +2,8 @@ package com.ajeeb.bumblecar.main.presentation.ui.home
 
 import android.app.DatePickerDialog
 import android.content.Context
+import android.content.Intent
+import android.net.Uri
 import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
@@ -14,6 +16,9 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.safeDrawingPadding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
@@ -57,6 +62,11 @@ fun HomeScreen(
                 is HomeSideEffect.ShowToast -> {
                     Toast.makeText(context, action.message, Toast.LENGTH_SHORT).show()
                 }
+
+                is HomeSideEffect.OpenDeepLink -> {
+                    val intent = Intent(Intent.ACTION_VIEW, Uri.parse(action.deepLink))
+                    context.startActivity(intent)
+                }
             }
         }
     }
@@ -79,12 +89,14 @@ fun HomeScreen(
                 item {
                     Column {
 
+                        //Pick up TextField
                         BumbleCarBasicTextField(modifier = Modifier
                             .fillMaxWidth()
                             .padding(horizontal = 16.dp),
                             value = state.value.pickUpPoint,
                             label = stringResource(R.string.pickup_location),
                             placeholder = stringResource(R.string.enter_your_pick_up_location),
+                            isError = state.value.isErrorOnPickUpPoint,
                             filteredSuggestions = state.value.pickUpSuggestions,
                             setOnValueChange = { newText ->
                                 onEvent(HomeIntent.SetPickUpPoint(newText))
@@ -95,6 +107,7 @@ fun HomeScreen(
 
                         Spacer(Modifier.height(4.dp))
 
+                        //Drop off TextField
                         BumbleCarBasicTextField(
                             modifier = Modifier
                                 .fillMaxWidth()
@@ -102,6 +115,7 @@ fun HomeScreen(
                             value = state.value.dropOffPoint,
                             label = stringResource(R.string.drop_off_point),
                             placeholder = stringResource(R.string.enter_your_drop_off_location),
+                            isError = state.value.isErrorOnDropOffPoint,
                             filteredSuggestions = state.value.dropOffSuggestions,
                             setOnValueChange = { newText ->
                                 onEvent(HomeIntent.SetDropOffPoint(newText))
@@ -113,6 +127,7 @@ fun HomeScreen(
 
                         Spacer(Modifier.height(12.dp))
 
+                        //DatePickers
                         Row(
                             modifier = Modifier
                                 .fillMaxWidth()
@@ -123,6 +138,7 @@ fun HomeScreen(
                                 modifier = Modifier.weight(1f),
                                 placeholder = stringResource(R.string.pick_up_date),
                                 value = state.value.pickUpDate,
+                                isError = state.value.isErrorOnPickUpDate,
                                 onClick = {
                                     openDatePicker(context = context, onDateSelected = { date ->
                                         onEvent(HomeIntent.SetPickUpDate(date))
@@ -136,6 +152,7 @@ fun HomeScreen(
                                 modifier = Modifier.weight(1f),
                                 placeholder = stringResource(R.string.drop_off_date),
                                 value = state.value.dropOffDate,
+                                isError = state.value.isErrorOnDropOffDate,
                                 onClick = {
                                     openDatePicker(context = context, onDateSelected = { date ->
                                         onEvent(HomeIntent.SetDropOffDate(date))
@@ -144,6 +161,28 @@ fun HomeScreen(
                             )
                         }
 
+                        Spacer(Modifier.height(20.dp))
+
+                        Button(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(horizontal = 16.dp),
+                            shape = RoundedCornerShape(16.dp),
+                            onClick = {
+                                onEvent(HomeIntent.GenerateDeepLink)
+                            },
+                            colors = ButtonDefaults.buttonColors().copy(
+                                containerColor = MaterialTheme.colorScheme.primary,
+                                contentColor = MaterialTheme.colorScheme.onPrimary
+                            )
+                        ) {
+                            Text(
+                                text = "Search on Kayak",
+                                style = MaterialTheme.typography.displayMedium,
+                                color = MaterialTheme.colorScheme.onPrimary,
+                                modifier = Modifier.padding(vertical = 8.dp)
+                            )
+                        }
 
                     }
 

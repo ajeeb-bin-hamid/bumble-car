@@ -12,6 +12,10 @@ data class HomeState(
     val dropOffSuggestions: ArrayList<String> = arrayListOf(),
     val pickUpDate: String? = null,
     val dropOffDate: String? = null,
+    val isErrorOnPickUpPoint: Boolean = false,
+    val isErrorOnDropOffPoint: Boolean = false,
+    val isErrorOnPickUpDate: Boolean = false,
+    val isErrorOnDropOffDate: Boolean = false,
 ) {
     companion object {
         val typeMap: Map<KType, NavType<out Any>> = mapOf()

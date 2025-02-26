@@ -22,7 +22,11 @@ import com.ajeeb.bumblecar.R
 
 @Composable
 fun BumbleCarDatePicker(
-    modifier: Modifier = Modifier, placeholder: String, value: String?, onClick: () -> Unit
+    modifier: Modifier = Modifier,
+    placeholder: String,
+    value: String?,
+    isError: Boolean,
+    onClick: () -> Unit
 ) {
     Row(modifier = modifier
         .clickable {
@@ -30,9 +34,11 @@ fun BumbleCarDatePicker(
         }
         .background(MaterialTheme.colorScheme.background)
         .border(
-            width = 1.dp,
-            color = MaterialTheme.colorScheme.surface,
-            shape = RoundedCornerShape(16.dp)
+            width = 1.dp, color = if (isError) {
+                MaterialTheme.colorScheme.onError
+            } else {
+                MaterialTheme.colorScheme.surface
+            }, shape = RoundedCornerShape(16.dp)
         )
         .padding(16.dp), verticalAlignment = Alignment.CenterVertically) {
         Image(
