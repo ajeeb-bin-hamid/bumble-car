@@ -10,6 +10,8 @@ data class HomeState(
     val dropOffPoint: String = "",
     val pickUpSuggestions: ArrayList<String> = arrayListOf(),
     val dropOffSuggestions: ArrayList<String> = arrayListOf(),
+    val pickUpDate: String? = null,
+    val dropOffDate: String? = null,
 ) {
     companion object {
         val typeMap: Map<KType, NavType<out Any>> = mapOf()

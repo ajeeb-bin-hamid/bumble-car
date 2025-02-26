@@ -32,6 +32,8 @@ class HomeViewModel @Inject constructor(
             is HomeIntent.SetDropOffPoint -> setDropOffPoint(event.text)
             is HomeIntent.SearchPickUpPoint -> searchPickUpPoint(event.text)
             is HomeIntent.SearchDropOffPoint -> searchDropOffPoint(event.text)
+            is HomeIntent.SetPickUpDate -> setPickUpDate(event.date)
+            is HomeIntent.SetDropOffDate -> setDropOffDate(event.date)
         }
     }
 
@@ -83,6 +85,19 @@ class HomeViewModel @Inject constructor(
                 }
             }
 
+        }
+    }
+
+    private fun setPickUpDate(date: String) {
+        viewModelScope.launch {
+            reduceState { copy(pickUpDate = date) }
+        }
+    }
+
+
+    private fun setDropOffDate(date: String) {
+        viewModelScope.launch {
+            reduceState { copy(dropOffDate = date) }
         }
     }
 }
